@@ -1,4 +1,4 @@
-import People, { PeopleProps } from '../Entity/People';
+import People from '../Entity/People';
 
 export default interface IPeopleRepository {
   create(props: People): Promise<any>;

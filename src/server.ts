@@ -1,7 +1,7 @@
 import express from 'express';
 import InMemoryPeopleRepository from './domains/people/Repositories/InMemoryRepository';
 import CreatePeopleUseCase from './domains/people/useCases/CreatePeople/CreatePeopleUseCase';
-import ListAllPeopleUseCase from './domains/people/useCases/ListAllPeople/ListAllPeople';
+import ListAllPeopleUseCase from './domains/people/useCases/ListAllPeople/ListAllPeopleUseCase';
 
 const app = express();
 

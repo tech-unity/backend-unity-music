@@ -4,10 +4,10 @@ import IPeopleRepository from '../../Repositories/IPeopleRepository';
 class CreatePeopleUseCase {
   constructor(private repository: IPeopleRepository) {}
 
-  execute(props: PeopleProps): People {
+  async execute(props: PeopleProps): Promise<People> {
     if (!props) throw new Error('Requisition body invalid');
 
-    const people = People.create(props);
+    const people = new People(props);
     this.repository.create(people);
     return people;
   }

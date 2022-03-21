@@ -1,11 +1,13 @@
-import CreateUserException from '../Exceptions/CreateUserException';
+import CreatePeopleException from '../Exceptions/CreateUserException';
 import { randomUUID } from 'crypto';
+import Instrument from '../../instruments/Entity/Instrument';
 
 export interface PeopleProps {
   id?: string;
   name: string;
   email: string;
   phone?: string;
+  instruments?: Instrument[];
 }
 
 export default class People {
@@ -13,20 +15,22 @@ export default class People {
   private name: string;
   private email: string;
   private phone: string | undefined;
+  private instruments: Instrument[];
 
   constructor(props: PeopleProps) {
     this.id = props.id || randomUUID();
     this.name = props.name;
     this.email = props.email;
     this.phone = props.phone;
+    this.instruments = props.instruments || [];
 
     this.validate();
   }
 
   private validate() {
-    if (!this.id) throw new CreateUserException('Id is required');
-    if (!this.name) throw new CreateUserException('Name is required');
-    if (!this.email) throw new CreateUserException('Email is required');
+    if (!this.id) throw new CreatePeopleException('Id is required');
+    if (!this.name) throw new CreatePeopleException('Name is required');
+    if (!this.email) throw new CreatePeopleException('Email is required');
   }
 
   get getId() {
@@ -43,5 +47,9 @@ export default class People {
 
   get getPhone() {
     return this.phone;
+  }
+
+  get getInstruments() {
+    return this.instruments;
   }
 }

@@ -1,14 +1,15 @@
 import People, { PeopleProps } from '../../Entity/People';
+import CreatePeopleException from '../../Exceptions/CreateUserException';
 import IPeopleRepository from '../../Repositories/IPeopleRepository';
 
 class CreatePeopleUseCase {
   constructor(private repository: IPeopleRepository) {}
 
-  execute(props: PeopleProps): People {
-    if (!props) throw new Error('Requisition body invalid');
+  async execute(props: PeopleProps): Promise<People> {
+    if (!props) throw new CreatePeopleException('Invalid properties');
 
-    const people = People.create(props);
-    this.repository.create(people);
+    const people = new People(props);
+    await this.repository.create(people);
     return people;
   }
 }

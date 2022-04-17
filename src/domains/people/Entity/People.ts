@@ -40,7 +40,7 @@ export default class People {
     if (!this.name) throw new CreatePeopleException('Name is required');
     if (!this.email) throw new CreatePeopleException('Email is required');
     if (!this.gender) throw new CreatePeopleException('Gender is required');
-    if (!this.isMinister) throw new CreatePeopleException('IsMinister is required')
+    if (Boolean(this.isMinister) !== this.isMinister) throw new CreatePeopleException('IsMinister is required')
   }
 
   get getId() {

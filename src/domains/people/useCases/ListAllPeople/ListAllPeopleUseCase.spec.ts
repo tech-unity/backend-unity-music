@@ -1,4 +1,4 @@
-import People from '../../Entity/People';
+import People, { Gender } from '../../Entity/People';
 import InMemoryPeopleRepository from '../../Repositories/InMemoryRepository';
 import ListAllPeople from './ListAllPeopleUseCase';
 
@@ -10,6 +10,8 @@ describe('ListAllPeople', () => {
         name: 'enzo',
         email: 'enzomoraes12@hotmail.com',
         phone: '67992753470',
+        gender: 'M' as Gender,
+        isMinister: false,
       })
     );
     repository.create(
@@ -17,6 +19,8 @@ describe('ListAllPeople', () => {
         name: 'enzo',
         email: 'enzomoraes12@hotmail.com',
         phone: '67992753470',
+        gender: 'M' as Gender,
+        isMinister: false,
       })
     );
     const ListAllPeopleUseCase = new ListAllPeople(repository);

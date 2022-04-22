@@ -2,11 +2,15 @@ import CreatePeopleException from '../Exceptions/CreateUserException';
 import { randomUUID } from 'crypto';
 import Instrument from '../../instruments/Entity/Instrument';
 
+export type Gender = 'M' | 'F'
+
 export interface PeopleProps {
   id?: string;
   name: string;
   email: string;
   phone?: string;
+  gender: Gender;
+  isMinister: boolean;
   instruments?: Instrument[];
 }
 
@@ -15,6 +19,8 @@ export default class People {
   private name: string;
   private email: string;
   private phone: string | undefined;
+  private gender: Gender;
+  private isMinister: boolean;
   private instruments: Instrument[];
 
   constructor(props: PeopleProps) {
@@ -23,6 +29,8 @@ export default class People {
     this.email = props.email;
     this.phone = props.phone;
     this.instruments = props.instruments || [];
+    this.gender = props.gender;
+    this.isMinister = props.isMinister;
 
     this.validate();
   }
@@ -31,6 +39,8 @@ export default class People {
     if (!this.id) throw new CreatePeopleException('Id is required');
     if (!this.name) throw new CreatePeopleException('Name is required');
     if (!this.email) throw new CreatePeopleException('Email is required');
+    if (!this.gender) throw new CreatePeopleException('Gender is required');
+    if (Boolean(this.isMinister) !== this.isMinister) throw new CreatePeopleException('IsMinister is required')
   }
 
   get getId() {
@@ -52,4 +62,13 @@ export default class People {
   get getInstruments() {
     return this.instruments;
   }
+
+  get getGender() {
+    return this.gender;
+  }
+
+  get getIsMinister() {
+    return this.isMinister;
+  }
+
 }

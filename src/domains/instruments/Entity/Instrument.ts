@@ -17,7 +17,7 @@ export default class Instrument {
     this.validate();
   }
 
-  validate() {
+   private validate() {
     if (!this.name) throw new CreateInstrumentException('Name is required');
     if (this.name.trim().length === 0)
       throw new CreateInstrumentException('Name may not be empty');

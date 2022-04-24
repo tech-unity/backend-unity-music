@@ -21,7 +21,7 @@ export default class Scale  {
   constructor(props: ScaleProps) {
     this.id = props.id || randomUUID();
     this.date = props.date;
-    this.band = props.band;
+    this.band = props.band || [];
     this.singers = props.singers;
 
     this.validate();

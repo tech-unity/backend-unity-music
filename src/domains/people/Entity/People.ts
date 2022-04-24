@@ -38,6 +38,7 @@ export default class People {
   private validate() {
     if (!this.id) throw new CreatePeopleException('Id is required');
     if (!this.name) throw new CreatePeopleException('Name is required');
+    if (this.name.trim().length === 0) throw new CreatePeopleException('Name may not be empty');
     if (!this.email) throw new CreatePeopleException('Email is required');
     if (!this.gender) throw new CreatePeopleException('Gender is required');
     if (Boolean(this.isMinister) !== this.isMinister) throw new CreatePeopleException('IsMinister is required')

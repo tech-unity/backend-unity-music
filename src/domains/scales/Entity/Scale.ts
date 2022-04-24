@@ -1,19 +1,21 @@
+import { randomUUID } from 'crypto';
 import Instrument from "../../instruments/Entity/Instrument";
 import People from "../../people/Entity/People";
-import { randomUUID } from 'crypto';
 import CreateScaleException from "../Exceptions/CreateScaleException";
+
+export type Band = Array<{ instrument: Instrument, person: People }>;
 
 export interface ScaleProps {
   id: string;
   date: Date;
-  band: Map<Instrument, People>;
+  band: Band;
   singers: People[];
 }
 
 export default class Scale  {
   private id: string;
   private date: Date;
-  private band: Map<Instrument, People>;
+  private band: Band;
   private singers: People[];
 
   constructor(props: ScaleProps) {

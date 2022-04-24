@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import Instrument, { InstrumentProps } from "../../../instruments/Entity/Instrument";
 import People, { Gender, PeopleProps } from "../../../people/Entity/People";
-import Scale, { ScaleProps } from "../../Entity/Scale";
+import Scale, { Band, ScaleProps } from "../../Entity/Scale";
 import InMemoryScaleRepository from "../../Repositories/InMemoryRepository";
 import ListAllScaleUseCase from "../ListAllScale/ListAllScaleUseCase";
 
@@ -39,13 +39,13 @@ describe('ListAllScaleUseCase', () => {
     const violonista = new People(violonistaProps);
     const cantor = new People(cantorProps);
 
-    const mapBand = new Map<Instrument, People>();
-    mapBand.set(violao, violonista);
+    const band: Band = [];
+    band.push({instrument: violao, person: violonista});
 
     const scaleProps: ScaleProps = {
       id: randomUUID(),
       date: new Date(),
-      band: mapBand,
+      band: band,
       singers: [cantor]
     }
 

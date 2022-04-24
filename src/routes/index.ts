@@ -1,11 +1,13 @@
 import peopleRoutes from '../routes/People/PeopleRoutes';
 import instrumentRoutes from '../routes/Instruments/InstrumentRoutes';
+import scaleRoutes from '../routes/Scales/ScalesRoutes';
 import { Router } from 'express';
 
 const router = Router();
 
 router.use(peopleRoutes);
 router.use(instrumentRoutes);
+router.use(scaleRoutes);
 
 // Middleware de erros padrao do express
 router.use((error: any, req: any, res: any, next: any) => {

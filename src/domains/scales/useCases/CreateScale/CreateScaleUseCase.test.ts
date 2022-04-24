@@ -1,20 +1,25 @@
 import { randomUUID } from 'crypto'
 import Instrument, { InstrumentProps } from "../../../instruments/Entity/Instrument"
+import InMemoryInstrumentRepository from '../../../instruments/Repositories/InMemoryRepository'
 import People, { Gender, PeopleProps } from "../../../people/Entity/People"
+import InMemoryPeopleRepository from '../../../people/Repositories/InMemoryRepository'
 import { ScaleProps } from "../../Entity/Scale"
 import InMemoryScaleRepository from "../../Repositories/InMemoryRepository"
-import CreateScaleUseCase from "./CreateScaleUseCase"
+import CreateScaleUseCase, { ScaleDTORequest } from "./CreateScaleUseCase"
 
 describe('CreateScaleUseCase', () => {
   it('should create a scale', async () => {
     const scaleRepository = new InMemoryScaleRepository();
-    const createScaleUseCase = new CreateScaleUseCase(scaleRepository);
+    const peopleRepository = new InMemoryPeopleRepository();
+    const instrumentRepository = new InMemoryInstrumentRepository();
+    const createScaleUseCase = new CreateScaleUseCase(scaleRepository, peopleRepository, instrumentRepository);
 
     const violaoProps: InstrumentProps = {
       id: randomUUID(),
       name: 'Violão',
     }
     const violao = new Instrument(violaoProps);
+    instrumentRepository.create(violao);
 
     const violonistaProps: PeopleProps = {
       id: randomUUID(),
@@ -37,33 +42,35 @@ describe('CreateScaleUseCase', () => {
     }
     
     const violonista = new People(violonistaProps);
+    peopleRepository.create(violonista)
     const cantor = new People(cantorProps);
+    peopleRepository.create(cantor)
 
-    const mapBand = new Map<Instrument, People>();
-    mapBand.set(violao, violonista);
+    const band = new Array<{ instrument: string, person: string }>();
+    band.push({ instrument: violao.getId, person: violonista.getId });
 
-    const scaleProps: ScaleProps = {
+    const scaleProps: ScaleDTORequest = {
       id: randomUUID(),
       date: new Date(),
-      band: mapBand,
-      singers: [cantor]
+      band: band,
+      singers: [cantor.getId]
     }
 
     const result = await createScaleUseCase.execute(scaleProps);
 
-    expect(result.getDate).toBeDefined()
-    expect(result.getId).toBeDefined()
-    expect(result.getBand).toBeDefined()
-    expect(result.getSingers).toBeDefined()
+    expect(result.date).toBeDefined()
+    expect(result.id).toBeDefined()
+    expect(result.band).toBeDefined()
+    expect(result.singers).toBeDefined()
 
-    expect(result.getSingers.length).toBe(1)
-    expect(result.getBand.size).toBe(1)
+    expect(result.singers.length).toBe(1)
+    expect(result.band.length).toBe(1)
 
-    const firstBandEntry = result.getBand.entries().next().value
-    expect(firstBandEntry[0]).toBe(violao)
-    expect(firstBandEntry[1]).toBe(violonista)
+    const firstBandEntry = result.band[0]
+    expect(firstBandEntry.instrument).toBe(violao)
+    expect(firstBandEntry.person).toBe(violonista)
     
-    const firstSingersEntry = result.getSingers[0]
+    const firstSingersEntry = result.singers[0]
     expect(firstSingersEntry).toBe(cantor)
   })
 })

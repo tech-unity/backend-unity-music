@@ -1,0 +1,39 @@
+version: "3.5"
+
+services:
+  unitybd:
+    container_name: unitybd
+    restart: unless-stopped
+    image: postgres:latest
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - app-net
+    ports:
+      - '5432:5432'
+    env_file:
+      - ./.env.pgsql
+
+  unitypgadmin:
+    image: dpage/pgadmin4
+    container_name: unitypgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@teste.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "5433:80"
+    depends_on:
+      - unitybd
+    networks:
+      - app-net
+
+###############################################################################
+# FIM DOS SERVICES
+###############################################################################
+
+networks:
+  app-net:
+    external:
+      name: external-networks

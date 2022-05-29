@@ -2,10 +2,12 @@ import InMemoryPeopleRepository from '../../domains/people/Repositories/InMemory
 import CreatePeopleUseCase from '../../domains/people/useCases/CreatePeople/CreatePeopleUseCase';
 import ListAllPeopleUseCase from '../../domains/people/useCases/ListAllPeople/ListAllPeopleUseCase';
 import { Router } from 'express';
+import PostgresPeopleRepository from '../../domains/people/Repositories/PostgresRepository';
 
 const router = Router();
 
-const peopleRepository = new InMemoryPeopleRepository();
+// const peopleRepository = new InMemoryPeopleRepository();
+const peopleRepository = new PostgresPeopleRepository();
 
 // Rota post - para criar a pessoa
 router.post('/people', async (req, res, next) => {

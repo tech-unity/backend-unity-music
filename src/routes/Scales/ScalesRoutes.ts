@@ -1,15 +1,19 @@
 import { Router } from 'express';
-import InMemoryInstrumentRepository from '../../domains/instruments/Repositories/InMemoryRepository';
-import InMemoryPeopleRepository from '../../domains/people/Repositories/InMemoryRepository';
-import InMemoryScaleRepository from '../../domains/scales/Repositories/InMemoryRepository';
+import PostgresInstrumentRepository from '../../domains/instruments/Repositories/PostgresRepository';
+import PostgresPeopleRepository from '../../domains/people/Repositories/PostgresRepository';
+import PostgresScaleRepository from '../../domains/scales/Repositories/PostgresRepository';
 import CreateScaleUseCase from '../../domains/scales/useCases/CreateScale/CreateScaleUseCase';
 import ListAllScaleUseCase from '../../domains/scales/useCases/ListAllScale/ListAllScaleUseCase';
 
 const router = Router();
 
-const scaleRepository = new InMemoryScaleRepository();
-const peopleRepository = new InMemoryPeopleRepository();
-const instrumentRepository = new InMemoryInstrumentRepository();
+// const scaleRepository = new InMemoryScaleRepository();
+// const peopleRepository = new InMemoryPeopleRepository();
+// const instrumentRepository = new InMemoryInstrumentRepository();
+
+const scaleRepository = new PostgresScaleRepository();
+const peopleRepository = new PostgresPeopleRepository();
+const instrumentRepository = new PostgresInstrumentRepository();
 
 router.post('/scales', async (req, res, next) => {
   const createScaleUseCase = new CreateScaleUseCase(scaleRepository, peopleRepository, instrumentRepository);

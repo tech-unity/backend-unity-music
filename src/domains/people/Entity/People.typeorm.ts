@@ -1,19 +1,18 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from 'typeorm';
-import Instrument from '../../instruments/Entity/Instrument';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from 'typeorm';
 import InstrumentTypeORM from '../../instruments/Entity/Instrument.typeorm';
 
-@Entity()
+@Entity({ name: 'people' })
 export default class PeopleTypeORM {
   @PrimaryColumn()
   id!: string;
-  
+
   @Column()
   name!: string;
 
   @Column()
   email!: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   phone?: string;
 
   @Column()
@@ -23,6 +22,6 @@ export default class PeopleTypeORM {
   isMinister!: boolean;
 
   @ManyToMany(() => InstrumentTypeORM)
-  @JoinTable()
+  @JoinTable({ name: 'people_instruments' })
   instruments!: InstrumentTypeORM[];
 }

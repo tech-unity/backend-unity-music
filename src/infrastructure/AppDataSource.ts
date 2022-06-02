@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import InstrumentTypeORM from '../domains/instruments/Entity/Instrument.typeorm';
 import PeopleTypeORM from '../domains/people/Entity/People.typeorm';
+import ScaleTypeORM, { BandTypeORM } from '../domains/scales/Entity/Scale.typeorm';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -12,7 +13,7 @@ export const AppDataSource = new DataSource({
   database: 'postgres',
   synchronize: true,
   logging: true,
-  entities: [InstrumentTypeORM, PeopleTypeORM],
+  entities: [InstrumentTypeORM, PeopleTypeORM, ScaleTypeORM, BandTypeORM],
   subscribers: [],
   migrations: [],
 });

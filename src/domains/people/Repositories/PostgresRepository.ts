@@ -37,11 +37,13 @@ export default class PostgresPeopleRepository implements IPeopleRepository {
       email: entity.email,
       phone: entity.phone,
       gender: entity.gender as Gender,
-      isMinister: entity.isMinister
+      isMinister: entity.isMinister,
     });
   }
   async findAll(): Promise<any> {
-    const response = await this.repository.find();
+    const response = await this.repository.find({
+      relations: { instruments: true },
+    });
     return response.map(entity => {
       return new People({
         id: entity.id,

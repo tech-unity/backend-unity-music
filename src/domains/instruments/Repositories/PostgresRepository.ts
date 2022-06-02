@@ -3,6 +3,7 @@ import { AppDataSource } from '../../../infrastructure/AppDataSource';
 import Instrument from '../Entity/Instrument';
 import InstrumentTypeORM from '../Entity/Instrument.typeorm';
 import CreateInstrumentException from '../Exceptions/CreateInstrumentException';
+import InstrumentNotFoundException from '../Exceptions/InstrumentNotFoundException';
 import IInstrumentRepository from './IInstrumentRepository';
 
 export default class PostgresInstrumentRepository
@@ -35,7 +36,13 @@ export default class PostgresInstrumentRepository
     });
   }
 
-  findById(id: string): Promise<Instrument> {
-    throw new Error('Method not implemented.');
+  async findById(id: string): Promise<Instrument> {
+    const response = await this.repository.findOneBy({ id });
+    if (!response) {
+      throw new InstrumentNotFoundException(
+        `Instrument of id ${id} could not be found`
+      );
+    }
+    return new Instrument({ id: response.id, name: response.name });
   }
 }

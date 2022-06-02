@@ -25,9 +25,9 @@ export default class PostgresScaleRepository implements IScaleRepository {
   }
 
   async create(scale: Scale): Promise<Scale> {
-    const foundDate = await this.repository.findOneBy({ date: scale.getDate });
+    const foundDate = await this.repository.findOneBy({ date: new Date(scale.getDate).toLocaleDateString() });
     if (foundDate) {
-      throw new CreateScaleException('Scale already exists');
+      throw new CreateScaleException(`A scale to date [ ${new Date(scale.getDate).toLocaleDateString()} ] already exists`);
     }
 
     const typeORMEntity = await this.toTypeORM(scale);
@@ -59,7 +59,7 @@ export default class PostgresScaleRepository implements IScaleRepository {
   private async toTypeORM(scale: Scale): Promise<ScaleTypeORM> {
     const scaleTypeORM = new ScaleTypeORM();
     scaleTypeORM.id = scale.getId;
-    scaleTypeORM.date = scale.getDate;
+    scaleTypeORM.date = new Date(scale.getDate).toLocaleDateString();
     scaleTypeORM.band = [];
     scaleTypeORM.singers = [];
     for (const singer of scale.getSingers) {
@@ -103,7 +103,7 @@ export default class PostgresScaleRepository implements IScaleRepository {
   private toDomainModel(scaleTypeORM: ScaleTypeORM): Scale {
     return new Scale({
       id: scaleTypeORM.id,
-      date: scaleTypeORM.date,
+      date: new Date(scaleTypeORM.date),
       band: scaleTypeORM.band
         ? scaleTypeORM.band.map(band => {
             return {

@@ -21,8 +21,8 @@ export default class ScaleTypeORM {
   @PrimaryColumn()
   id!: string;
 
-  @Column()
-  date!: Date;
+  @Column({unique: true, type: 'date'})
+  date!: string;
 
   @ManyToMany(() => BandTypeORM)
   @JoinTable({ name: 'scale_band' })

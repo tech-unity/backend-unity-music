@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
   password: 'postgres',
   database: 'postgres',
   synchronize: true,
-  logging: true,
+  // logging: true,
   entities: [InstrumentTypeORM, PeopleTypeORM, ScaleTypeORM, BandTypeORM],
   subscribers: [],
   migrations: [],

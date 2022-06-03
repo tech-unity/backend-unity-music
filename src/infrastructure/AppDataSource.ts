@@ -11,11 +11,12 @@ export const AppDataSource = new DataSource({
   type: 'postgres',
   database: 'postgres',
   synchronize: true,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false }: false,
   // logging: true,
   entities: [InstrumentTypeORM, PeopleTypeORM, ScaleTypeORM, BandTypeORM],
   subscribers: [],
   migrations: [],
 });
 AppDataSource.initialize()
-  .then()
+  .then(() => console.log('We are at the environment: ', process.env.NODE_ENV))
   .catch(err => console.error(err));

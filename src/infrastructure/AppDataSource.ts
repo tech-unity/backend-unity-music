@@ -7,11 +7,8 @@ import * as dotenv from 'dotenv'
 
 dotenv.config();
 export const AppDataSource = new DataSource({
+  url: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/postgres',
   type: 'postgres',
-  host: process.env.POSTGRES_HOST || 'localhost',
-  port: parseInt(process.env.POSTGRES_USER as string) || 5432,
-  username: process.env.POSTGRES_USER || 'postgres',
-  password: process.env.POSTGRES_PASSWORD || 'postgres',
   database: 'postgres',
   synchronize: true,
   // logging: true,

@@ -11,6 +11,7 @@ export const AppDataSource = new DataSource({
   type: 'postgres',
   database: 'postgres',
   synchronize: true,
+  ssl: process.env.SSL ? true : false,
   // logging: true,
   entities: [InstrumentTypeORM, PeopleTypeORM, ScaleTypeORM, BandTypeORM],
   subscribers: [],

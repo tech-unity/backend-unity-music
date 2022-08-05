@@ -14,21 +14,21 @@ services:
     env_file:
       - ./.env.pgsql
 
-  unitypgadmin:
-    image: dpage/pgadmin4
-    container_name: unitypgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "admin@teste.com"
-      PGADMIN_DEFAULT_PASSWORD: "admin"
-    command: sudo chown -R 5050:5050 ./pgadmin
-    volumes:
-      - ./pgadmin:/var/lib/pgadmin
-    ports:
-      - "5433:80"
-    depends_on:
-      - unitybd
-    networks:
-      - app-net
+  # unitypgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: unitypgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: "admin@teste.com"
+  #     PGADMIN_DEFAULT_PASSWORD: "admin"
+  #   command: sudo chown -R 5050:5050 ./pgadmin
+  #   volumes:
+  #     - ./pgadmin:/var/lib/pgadmin
+  #   ports:
+  #     - "5433:80"
+  #   depends_on:
+  #     - unitybd
+  #   networks:
+  #     - app-net
 
 ###############################################################################
 # FIM DOS SERVICES

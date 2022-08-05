@@ -1,7 +1,7 @@
-import Instrument, { InstrumentProps } from '../Entity/Instrument';
+import InstrumentTypeORM from '../Entity/Instrument.typeorm';
 
 export default interface IInstrumentsRepository {
-  create(instrument: Instrument): Promise<Instrument>;
-  findAll(): Promise<Instrument[]>;
-  findById(id: string): Promise<Instrument>;
+  create(instrument: InstrumentTypeORM): Promise<InstrumentTypeORM>;
+  findAll(): Promise<InstrumentTypeORM[]>;
+  findById(id: string): Promise<InstrumentTypeORM>;
 }

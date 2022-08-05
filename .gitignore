@@ -1,3 +1,6 @@
+.vscode
+pgadmin
+
 # Logs
 logs
 *.log

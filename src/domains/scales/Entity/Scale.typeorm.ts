@@ -18,7 +18,7 @@ export class BandTypeORM {
 
 @Entity({ name: 'scale' })
 export default class ScaleTypeORM {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column({unique: true, type: 'date'})

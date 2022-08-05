@@ -1,9 +1,15 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import InstrumentTypeORM from '../../instruments/Entity/Instrument.typeorm';
 
 @Entity({ name: 'people' })
 export default class PeopleTypeORM {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
@@ -23,5 +29,5 @@ export default class PeopleTypeORM {
 
   @ManyToMany(() => InstrumentTypeORM)
   @JoinTable({ name: 'people_instruments' })
-  instruments!: InstrumentTypeORM[];
+  instruments?: InstrumentTypeORM[];
 }

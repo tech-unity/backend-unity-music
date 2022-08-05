@@ -12,7 +12,7 @@ export default class CreateUseCase {
   ) {}
 
   async execute(props: PeopleProps): Promise<PeopleTypeORM> {
-    this.createValidator.execute(props);
+    await this.createValidator.execute(props);
 
     const person = new PeopleTypeORM();
     person.name = props.name;

@@ -13,10 +13,6 @@ export default class PostgresPeopleRepository implements IPeopleRepository {
   }
 
   async create(people: PeopleTypeORM): Promise<PeopleTypeORM> {
-    const foundId = await this.repository.findOneBy({ id: people.id });
-    if (foundId) {
-      throw new CreatePeopleException('Instrument already exists');
-    }
     return await this.repository.save(people);
   }
   async findAll(): Promise<PeopleTypeORM[]> {
@@ -31,5 +27,9 @@ export default class PostgresPeopleRepository implements IPeopleRepository {
       throw new PeopleNotFoundException(`Person of id ${id} does not exist!`);
     }
     return entity;
+  }
+
+  async findByEmail(email: string): Promise<PeopleTypeORM | null> {
+    return await this.repository.findOneBy({ email });
   }
 }

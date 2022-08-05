@@ -1,8 +1,14 @@
 import { PeopleProps } from '../Entity/People.props';
 import CreatePeopleException from '../Exceptions/CreateUserException';
+import IPeopleRepository from '../Repositories/IPeopleRepository';
 
 export default class CreateValidator {
-  execute(props: PeopleProps) {
+  constructor(private repository: IPeopleRepository) {
+
+  }
+  async execute(props: PeopleProps) {
+    const person = await this.repository.findByEmail(props.email);
+    if (person) throw new CreatePeopleException('Person already exists')
     if (!props) throw new CreatePeopleException('Invalid properties');
     if (!props.name) throw new CreatePeopleException('Name is required');
     if (props.name.trim().length === 0)

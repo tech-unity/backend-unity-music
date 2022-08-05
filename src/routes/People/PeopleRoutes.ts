@@ -8,7 +8,7 @@ const router = Router();
 
 const peopleRepository = new PostgresPeopleRepository();
 const instrumentRepository = new PostgresInstrumentRepository();
-const createValidator = new CreateValidator();
+const createValidator = new CreateValidator(peopleRepository);
 
 const createPeopleUseCase = new CreateUseCase(
   peopleRepository,

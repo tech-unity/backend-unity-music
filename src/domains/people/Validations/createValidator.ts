@@ -4,7 +4,6 @@ import CreatePeopleException from '../Exceptions/CreateUserException';
 export default class CreateValidator {
   execute(props: PeopleProps) {
     if (!props) throw new CreatePeopleException('Invalid properties');
-    if (!props.id) throw new CreatePeopleException('Id is required');
     if (!props.name) throw new CreatePeopleException('Name is required');
     if (props.name.trim().length === 0)
       throw new CreatePeopleException('Name may not be empty');

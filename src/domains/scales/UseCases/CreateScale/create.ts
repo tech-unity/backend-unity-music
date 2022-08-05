@@ -16,7 +16,7 @@ export default class CreateUseCase {
   ) {}
 
   async execute(props: ScaleProps): Promise<ScaleTypeORM> {
-    this.createValidator.execute(props);
+    await this.createValidator.execute(props);
 
     const bandArray: BandTypeORM[] = [];
     const singersArray: PeopleTypeORM[] = [];
@@ -25,7 +25,6 @@ export default class CreateUseCase {
       const instrument = await this.instrumentRepository.findById(
         props.band[index].instrument
       );
-      console.log('instrument', instrument)
 
       if (!instrument) {
         throw new CreateScaleException(
@@ -60,7 +59,7 @@ export default class CreateUseCase {
     const scale = new ScaleTypeORM();
     scale.singers = singersArray;
     scale.band = bandArray;
-    scale.date = props.date.toLocaleDateString();
+    scale.date = new Date(props.date).toLocaleDateString();
     return await this.scaleRepository.create(scale);
   }
 }

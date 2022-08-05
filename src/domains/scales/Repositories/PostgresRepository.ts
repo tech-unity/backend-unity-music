@@ -35,13 +35,9 @@ export default class PostgresScaleRepository implements IScaleRepository {
     });
   }
 
-  async findByDate(date: Date): Promise<ScaleTypeORM> {
-    const scale = await this.repository.findOneBy({
+  async findByDate(date: Date): Promise<ScaleTypeORM | null> {
+    return await this.repository.findOneBy({
       date: new Date(date).toLocaleDateString(),
     });
-    if (!scale) {
-      throw new ScaleNotFoundException(`Scale to date ${date.toLocaleDateString()} does not exist!`);
-    }
-    return scale;
   }
 }

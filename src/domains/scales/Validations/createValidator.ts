@@ -8,7 +8,6 @@ export default class CreateValidator {
   async execute(scale: ScaleProps) {
     if (!scale) throw new CreateScaleException('Invalid properties');
 
-    if (!scale.id) throw new CreateScaleException('Id is required');
     if (!scale.date) throw new CreateScaleException('Date is required');
     if (!scale.band) throw new CreateScaleException('Band is required');
     if (!scale.singers) throw new CreateScaleException('Singers are required');

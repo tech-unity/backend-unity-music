@@ -16,7 +16,6 @@ services:
       - app-net
     depends_on:
       - unitybd
-    command: npm start
 
   unitybd:
     container_name: unitybd

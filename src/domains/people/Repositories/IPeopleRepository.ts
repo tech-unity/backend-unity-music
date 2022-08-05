@@ -1,7 +1,7 @@
-import People, { PeopleProps } from '../Entity/People';
+import PeopleTypeORM from '../Entity/People.typeorm';
 
 export default interface IPeopleRepository {
-  create(props: People): Promise<any>;
-  findAll(): Promise<any>;
-  findById(id: string): Promise<People>;
+  create(people: PeopleTypeORM): Promise<PeopleTypeORM>;
+  findAll(): Promise<PeopleTypeORM[]>;
+  findById(id: string): Promise<PeopleTypeORM>;
 }

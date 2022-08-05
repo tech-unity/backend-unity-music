@@ -1,14 +1,16 @@
-import Instrument, { InstrumentProps } from '../Entity/Instrument';
+import InstrumentTypeORM from '../Entity/Instrument.typeorm';
 import CreateInstrumentException from '../Exceptions/CreateInstrumentException';
+import InstrumentNotFoundException from '../Exceptions/InstrumentNotFoundException';
 import IInstrumentRepository from './IInstrumentRepository';
 
-
 export default class InMemoryInstrumentRepository
-implements IInstrumentRepository
+  implements IInstrumentRepository
 {
-  static mock: Array<any> = [];
-  create(instrument: Instrument): Promise<any> {
-    const foundId = InMemoryInstrumentRepository.mock.some(register => register.id === instrument.getId);
+  static mock: Array<InstrumentTypeORM> = [];
+  create(instrument: InstrumentTypeORM): Promise<InstrumentTypeORM> {
+    const foundId = InMemoryInstrumentRepository.mock.some(
+      register => register.id === instrument.id
+    );
 
     if (foundId) {
       throw new CreateInstrumentException('Instrument already exists');
@@ -18,11 +20,18 @@ implements IInstrumentRepository
     return Promise.resolve(instrument);
   }
 
-  findAll(): Promise<any> {
+  findAll(): Promise<InstrumentTypeORM[]> {
     return Promise.resolve(InMemoryInstrumentRepository.mock);
   }
 
-  findById(id: string): Promise<Instrument> {
-    return Promise.resolve(InMemoryInstrumentRepository.mock.find(element => element.id === id));
+  findById(id: string): Promise<InstrumentTypeORM> {
+    const found = InMemoryInstrumentRepository.mock.find(
+      element => element.id === id
+    );
+    if (!found)
+      throw new InstrumentNotFoundException(
+        `Instrument of ${id} could not be found`
+      );
+    return Promise.resolve(found);
   }
 }

@@ -20,6 +20,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@teste.com"
       PGADMIN_DEFAULT_PASSWORD: "admin"
+    command: sudo chown -R 5050:5050 ./pgadmin
     volumes:
       - ./pgadmin:/var/lib/pgadmin
     ports:

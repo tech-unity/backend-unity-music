@@ -1,10 +1,10 @@
-import People from '../../Entity/People';
+import PeopleTypeORM from '../../Entity/People.typeorm';
 import IPeopleRepository from '../../Repositories/IPeopleRepository';
 
 class ListAllPeopleUseCase {
   constructor(private repository: IPeopleRepository) {}
-  execute(): Promise<People[]> {
-    return Promise.resolve(this.repository.findAll());
+  async execute(): Promise<PeopleTypeORM[]> {
+    return await this.repository.findAll();
   }
 }
 

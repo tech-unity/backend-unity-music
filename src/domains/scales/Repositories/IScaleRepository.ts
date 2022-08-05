@@ -1,6 +1,7 @@
-import Scale from "../Entity/Scale";
+import ScaleTypeORM from '../Entity/Scale.typeorm';
 
 export default interface IScaleRepository {
-  create(scale: Scale): Promise<Scale>;
-  findAll(): Promise<Scale[]>;
+  create(scale: ScaleTypeORM): Promise<ScaleTypeORM>;
+  findAll(): Promise<ScaleTypeORM[]>;
+  findByDate(date: Date): Promise<ScaleTypeORM>;
 }

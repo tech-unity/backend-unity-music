@@ -16,7 +16,7 @@ WORKDIR /home/node/app
 
 COPY package*.json ./
 
-RUN npm install --production
+RUN npm install --omit=dev
 
 COPY --from=builder /home/node/app/build ./build
 

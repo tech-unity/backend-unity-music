@@ -1,3 +1,4 @@
+import { NextFunction } from 'express';
 import { InstrumentProps } from '../../Entity/Instrument.props';
 import InstrumentTypeORM from '../../Entity/Instrument.typeorm';
 import IInstrumentRepository from '../../Repositories/IInstrumentRepository';
@@ -10,7 +11,7 @@ export default class CreateUseCase {
   ) {}
 
   async execute(props: InstrumentProps): Promise<InstrumentTypeORM> {
-    this.validator.execute(props);
+    await this.validator.execute(props);
 
     const instrument = new InstrumentTypeORM();
     instrument.name = props.name;

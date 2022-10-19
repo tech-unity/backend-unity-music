@@ -7,7 +7,7 @@ import CreateValidator from '../../domains/instruments/Validations/createValidat
 const router = Router();
 
 const instrumentsRepository = new PostgresInstrumentRepository();
-const createValidator = new CreateValidator();
+const createValidator = new CreateValidator(instrumentsRepository);
 
 const createInstrumentUseCase = new CreateUseCase(
   instrumentsRepository,

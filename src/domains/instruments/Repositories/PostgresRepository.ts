@@ -15,10 +15,6 @@ export default class PostgresInstrumentRepository
   }
 
   async create(instrument: InstrumentTypeORM): Promise<InstrumentTypeORM> {
-    const foundId = await this.repository.findOneBy({ id: instrument.id });
-    if (foundId) {
-      throw new CreateInstrumentException('Instrument already exists');
-    }
     return await this.repository.save(instrument);
   }
 
@@ -26,14 +22,11 @@ export default class PostgresInstrumentRepository
     return await this.repository.find();
   }
 
-  async findById(id: string): Promise<InstrumentTypeORM> {
-    const instrument = await this.repository.findOneBy({ id });
+  async findById(id: string): Promise<InstrumentTypeORM | null> {
+    return await this.repository.findOneBy({ id });
+  }
 
-    if (!instrument) {
-      throw new InstrumentNotFoundException(
-        `Instrument of id ${id} could not be found`
-      );
-    }
-    return instrument;
+  async findByName(name: string): Promise<InstrumentTypeORM | null> {
+    return await this.repository.findOneBy({ name });
   }
 }

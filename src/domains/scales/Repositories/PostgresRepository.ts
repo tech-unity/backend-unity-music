@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../../../infrastructure/AppDataSource';
+import toPostgresDate from '../../../utils/toPostgresDate';
 import ScaleTypeORM, { BandTypeORM } from '../Entity/Scale.typeorm';
-import ScaleNotFoundException from '../Exceptions/ScaleNotFoundException';
 import IScaleRepository from './IScaleRepository';
 
 export default class PostgresScaleRepository implements IScaleRepository {
@@ -37,7 +37,7 @@ export default class PostgresScaleRepository implements IScaleRepository {
 
   async findByDate(date: Date): Promise<ScaleTypeORM | null> {
     return await this.repository.findOneBy({
-      date: new Date(date).toLocaleDateString(),
+      date: toPostgresDate(date),
     });
   }
 }

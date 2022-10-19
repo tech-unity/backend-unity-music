@@ -1,3 +1,4 @@
+import toPostgresDate from '../../../../utils/toPostgresDate';
 import IInstrumentsRepository from '../../../instruments/Repositories/IInstrumentRepository';
 import PeopleTypeORM from '../../../people/Entity/People.typeorm';
 import IPeopleRepository from '../../../people/Repositories/IPeopleRepository';
@@ -59,7 +60,7 @@ export default class CreateUseCase {
     const scale = new ScaleTypeORM();
     scale.singers = singersArray;
     scale.band = bandArray;
-    scale.date = new Date(props.date).toLocaleDateString();
+    scale.date = toPostgresDate(props.date);
     return await this.scaleRepository.create(scale);
   }
 }

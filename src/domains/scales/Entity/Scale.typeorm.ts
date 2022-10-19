@@ -1,4 +1,9 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn
+} from 'typeorm';
 import InstrumentTypeORM from '../../instruments/Entity/Instrument.typeorm';
 import PeopleTypeORM from '../../people/Entity/People.typeorm';
 
@@ -7,12 +12,12 @@ export class BandTypeORM {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @ManyToMany(() => InstrumentTypeORM)
+  @ManyToOne(() => InstrumentTypeORM, { cascade: true })
   @JoinTable({ name: 'band_instrument' })
   instrument!: InstrumentTypeORM;
 
   @JoinTable({ name: 'band_person' })
-  @ManyToMany(() => PeopleTypeORM)
+  @ManyToOne(() => PeopleTypeORM, { cascade: true })
   person!: PeopleTypeORM;
 }
 
@@ -21,10 +26,10 @@ export default class ScaleTypeORM {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({unique: true, type: 'date'})
+  @Column({ unique: true, type: 'date' })
   date!: string;
 
-  @ManyToMany(() => BandTypeORM)
+  @ManyToMany(() => BandTypeORM, { cascade: true })
   @JoinTable({ name: 'scale_band' })
   band!: BandTypeORM[];
 

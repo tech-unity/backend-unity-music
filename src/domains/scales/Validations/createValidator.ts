@@ -12,7 +12,7 @@ export default class CreateValidator {
     if (!scale.band) throw new CreateScaleException('Band is required');
     if (!scale.singers) throw new CreateScaleException('Singers are required');
 
-    const foundDate = await this.scaleRepository.findByDate(scale.date);
+    const foundDate = await this.scaleRepository.findByDate(new Date(scale.date));
     if (foundDate) {
       throw new CreateScaleException(
         `A scale to date [ ${new Date(

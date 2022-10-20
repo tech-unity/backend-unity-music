@@ -1,3 +1,4 @@
+import InstrumentNotFoundException from '../../../instruments/Exceptions/InstrumentNotFoundException';
 import IInstrumentsRepository from '../../../instruments/Repositories/IInstrumentRepository';
 import { PeopleProps } from '../../Entity/People.props';
 import PeopleTypeORM from '../../Entity/People.typeorm';
@@ -20,7 +21,11 @@ export default class CreateUseCase {
     person.phone = props.phone;
     person.isMinister = props.isMinister;
     props.instruments?.forEach(async id => {
-      person.instruments?.push(await this.instrumentRepository.findById(id));
+      const instrument = await this.instrumentRepository.findById(id);
+      if (!instrument) {
+        throw new InstrumentNotFoundException(`Instrument of ${id} could not be found`)
+      }
+      person.instruments?.push(instrument);
     });
     person.gender = props.gender;
     return await this.repository.create(person);

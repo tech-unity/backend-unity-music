@@ -52,5 +52,4 @@ services:
 
 networks:
   app-net:
-    external:
-      name: external-networks
+    name: external-networks

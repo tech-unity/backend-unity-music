@@ -1,6 +1,7 @@
 import peopleRoutes from '../routes/People/PeopleRoutes';
 import instrumentRoutes from '../routes/Instruments/InstrumentRoutes';
 import scaleRoutes from '../routes/Scales/ScalesRoutes';
+import musicRoutes from '../routes/Musics/MusicRoutes';
 import { Router } from 'express';
 
 const router = Router();
@@ -8,6 +9,7 @@ const router = Router();
 router.use(peopleRoutes);
 router.use(instrumentRoutes);
 router.use(scaleRoutes);
+router.use(musicRoutes);
 
 // Middleware de erros padrao do express
 router.use((error: any, req: any, res: any, next: any) => {

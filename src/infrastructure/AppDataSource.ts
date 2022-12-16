@@ -7,6 +7,7 @@ import ScaleTypeORM, {
 } from '../domains/scales/Entity/Scale.typeorm';
 import * as dotenv from 'dotenv';
 import { initialSeed1670163084200 } from './migrations/1670163084200-initialSeed';
+import MusicTypeORM from '../domains/musics/Entity/Music.typeorm';
 
 dotenv.config();
 export const AppDataSource = new DataSource({
@@ -21,13 +22,19 @@ export const AppDataSource = new DataSource({
       ? { rejectUnauthorized: false }
       : false,
   // logging: true,
-  entities: [InstrumentTypeORM, PeopleTypeORM, ScaleTypeORM, BandTypeORM],
+  entities: [
+    InstrumentTypeORM,
+    PeopleTypeORM,
+    ScaleTypeORM,
+    BandTypeORM,
+    MusicTypeORM,
+  ],
   subscribers: [],
   migrations: [initialSeed1670163084200],
 });
 AppDataSource.initialize()
   .then(async () => {
-    console.log(AppDataSource.migrations)
+    console.log('migrations', AppDataSource.migrations);
     await AppDataSource.runMigrations();
     console.log('We are at the environment: ', process.env.NODE_ENV);
   })

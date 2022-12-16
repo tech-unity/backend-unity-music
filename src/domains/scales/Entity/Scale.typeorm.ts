@@ -5,6 +5,7 @@ import {
   ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn
 } from 'typeorm';
 import InstrumentTypeORM from '../../instruments/Entity/Instrument.typeorm';
+import MusicTypeORM from '../../musics/Entity/Music.typeorm';
 import PeopleTypeORM from '../../people/Entity/People.typeorm';
 
 @Entity({ name: 'band' })
@@ -36,4 +37,8 @@ export default class ScaleTypeORM {
   @ManyToMany(() => PeopleTypeORM)
   @JoinTable({ name: 'scale_singers' })
   singers!: PeopleTypeORM[];
+
+  @ManyToMany(() => MusicTypeORM)
+  @JoinTable({name: 'scale_music'})
+  musics!: MusicTypeORM[];
 }

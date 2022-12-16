@@ -5,4 +5,5 @@ export interface ScaleProps {
   date: Date;
   band: Band;
   singers: string[];
+  musics: string[];
 }

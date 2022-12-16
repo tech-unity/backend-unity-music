@@ -1,8 +1,10 @@
 import toPostgresDate from '../../../../utils/toPostgresDate';
 import IInstrumentsRepository from '../../../instruments/Repositories/IInstrumentRepository';
+import MusicTypeORM from '../../../musics/Entity/Music.typeorm';
+import IMusicRepository from '../../../musics/Repositories/IMusicRepository';
 import PeopleTypeORM from '../../../people/Entity/People.typeorm';
 import IPeopleRepository from '../../../people/Repositories/IPeopleRepository';
-import { ScaleProps } from '../../Entity/Scale';
+import { ScaleProps } from '../../Entity/Scale.props';
 import ScaleTypeORM, { BandTypeORM } from '../../Entity/Scale.typeorm';
 import CreateScaleException from '../../Exceptions/CreateScaleException';
 import IScaleRepository from '../../Repositories/IScaleRepository';
@@ -13,6 +15,7 @@ export default class CreateUseCase {
     private scaleRepository: IScaleRepository,
     private peopleRepository: IPeopleRepository,
     private instrumentRepository: IInstrumentsRepository,
+    private musicRepository: IMusicRepository,
     private createValidator: CreateValidator
   ) {}
 
@@ -21,6 +24,7 @@ export default class CreateUseCase {
 
     const bandArray: BandTypeORM[] = [];
     const singersArray: PeopleTypeORM[] = [];
+    const musicsArray: MusicTypeORM[] = [];
 
     for (let index = 0; index < props.band.length; index++) {
       const instrument = await this.instrumentRepository.findById(
@@ -57,9 +61,20 @@ export default class CreateUseCase {
       singersArray.push(person);
     }
 
+    for (let index = 0; index < props.musics.length; index++) {
+      const music = await this.musicRepository.findById(props.musics[index]);
+      if (!music) {
+        throw new CreateScaleException(
+          `Music with id: ${props.musics[index]} does not exist`
+        );
+      }
+      musicsArray.push(music);
+    }
+
     const scale = new ScaleTypeORM();
     scale.singers = singersArray;
     scale.band = bandArray;
+    scale.musics = musicsArray;
     scale.date = toPostgresDate(props.date);
     return await this.scaleRepository.create(scale);
   }

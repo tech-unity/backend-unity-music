@@ -1,6 +1,14 @@
-import toPostgresDate from '../../utils/toPostgresDate';
-
 export const instrumentSeed = [{ name: 'violão' }, { name: 'teclado' }];
+export const musicsSeed = [
+  {
+    name: 'Escudo - Daniel Ludtke',
+    src: 'https://www.youtube.com/watch?v=4c6_moLQytU&ab_channel=DanielL%C3%BCdtke-Topic',
+  },
+  {
+    name: 'Esconderijo - Daniel Ludtke',
+    src: 'https://www.youtube.com/watch?v=t57OAYGPhAM&ab_channel=DanielL%C3%BCdtke-Topic',
+  },
+];
 
 export const personSeed = [
   {

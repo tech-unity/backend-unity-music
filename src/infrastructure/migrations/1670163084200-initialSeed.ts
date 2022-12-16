@@ -1,22 +1,27 @@
 import dayjs from 'dayjs';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import InstrumentTypeORM from '../../domains/instruments/Entity/Instrument.typeorm';
+import MusicTypeORM from '../../domains/musics/Entity/Music.typeorm';
 import PeopleTypeORM from '../../domains/people/Entity/People.typeorm';
 import ScaleTypeORM, {
-  BandTypeORM
+  BandTypeORM,
 } from '../../domains/scales/Entity/Scale.typeorm';
 import toPostgresDate from '../../utils/toPostgresDate';
 import { AppDataSource } from '../AppDataSource';
-import { instrumentSeed, personSeed } from '../seed/scale.seed';
+import { instrumentSeed, musicsSeed, personSeed } from '../seed/scale.seed';
 
 export class initialSeed1670163084200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const scaleRepository = await AppDataSource.getRepository(ScaleTypeORM);
+    const musicRepository = await AppDataSource.getRepository(MusicTypeORM);
     const peopleRepository = await AppDataSource.getRepository(PeopleTypeORM);
     const bandRepository = await AppDataSource.getRepository(BandTypeORM);
     const instrumentRepository = await AppDataSource.getRepository(
       InstrumentTypeORM
     );
+
+    // creating musics first
+    const musics = await musicRepository.save(musicsSeed);
 
     // creating instruments first
     const instruments = await instrumentRepository.save(instrumentSeed);
@@ -38,11 +43,15 @@ export class initialSeed1670163084200 implements MigrationInterface {
         singers: [people[0], people[1]],
         date: toPostgresDate(new Date()),
         band,
+        musics: musics,
       },
       {
         singers: [people[0], people[1]],
-        date: toPostgresDate(new Date(dayjs(new Date()).add(7, 'day').toString())),
+        date: toPostgresDate(
+          new Date(dayjs(new Date()).add(7, 'day').toString())
+        ),
         band,
+        musics,
       },
     ];
 

@@ -30,6 +30,7 @@ export default class PostgresScaleRepository implements IScaleRepository {
           instrument: true,
           person: true,
         },
+        musics: true,
         singers: true,
       },
     });

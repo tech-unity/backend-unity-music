@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import PostgresInstrumentRepository from '../../domains/instruments/Repositories/PostgresRepository';
+import PostgresMusicRepository from '../../domains/musics/Repositories/PostgresRepository';
 import PostgresPeopleRepository from '../../domains/people/Repositories/PostgresRepository';
 import PostgresScaleRepository from '../../domains/scales/Repositories/PostgresRepository';
 import CreateScaleUseCase from '../../domains/scales/UseCases/CreateScale/create';
@@ -11,12 +12,14 @@ const router = Router();
 const scaleRepository = new PostgresScaleRepository();
 const peopleRepository = new PostgresPeopleRepository();
 const instrumentRepository = new PostgresInstrumentRepository();
-const createValidator = new CreateValidator(scaleRepository);
+const musicRepository = new PostgresMusicRepository();
+const createValidator = new CreateValidator(scaleRepository, musicRepository);
 
 const createScaleUseCase = new CreateScaleUseCase(
   scaleRepository,
   peopleRepository,
   instrumentRepository,
+  musicRepository,
   createValidator
 );
 const listAllScaleUseCase = new ListAllScaleUseCase(scaleRepository);

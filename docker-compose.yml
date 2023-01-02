@@ -17,6 +17,15 @@ services:
     depends_on:
       - unitybd
 
+  front:
+    build:
+      context: ../frontend-unity-music
+      dockerfile: Dockerfile
+    ports:
+      - 3006:80
+    networks:
+      - app-net
+
   unitybd:
     container_name: unitybd
     restart: unless-stopped

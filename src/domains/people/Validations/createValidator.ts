@@ -3,12 +3,8 @@ import CreatePeopleException from '../Exceptions/CreateUserException';
 import IPeopleRepository from '../Repositories/IPeopleRepository';
 
 export default class CreateValidator {
-  constructor(private repository: IPeopleRepository) {
-
-  }
+  constructor(private repository: IPeopleRepository) {}
   async execute(props: PeopleProps) {
-    const person = await this.repository.findByEmail(props.email);
-    if (person) throw new CreatePeopleException('Person already exists')
     if (!props) throw new CreatePeopleException('Invalid properties');
     if (!props.name) throw new CreatePeopleException('Name is required');
     if (props.name.trim().length === 0)
@@ -17,5 +13,7 @@ export default class CreateValidator {
     if (!props.gender) throw new CreatePeopleException('Gender is required');
     if (Boolean(props.isMinister) !== props.isMinister)
       throw new CreatePeopleException('IsMinister is required');
+    const person = await this.repository.findByEmail(props.email);
+    if (person) throw new CreatePeopleException('Person already exists');
   }
 }

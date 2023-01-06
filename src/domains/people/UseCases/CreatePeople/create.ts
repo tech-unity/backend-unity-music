@@ -20,13 +20,21 @@ export default class CreateUseCase {
     person.email = props.email;
     person.phone = props.phone;
     person.isMinister = props.isMinister;
-    props.instruments?.forEach(async id => {
-      const instrument = await this.instrumentRepository.findById(id);
-      if (!instrument) {
-        throw new InstrumentNotFoundException(`Instrument of ${id} could not be found`)
+    person.instruments = [];
+    if (props.instruments) {
+      for (let index = 0; index < props.instruments.length; index++) {
+        const instrument = await this.instrumentRepository.findById(
+          props.instruments[index]
+        );
+        if (!instrument) {
+          throw new InstrumentNotFoundException(
+            `Instrument of ${props.instruments[index]} could not be found`
+          );
+        }
+        person.instruments.push(instrument);
       }
-      person.instruments?.push(instrument);
-    });
+    }
+
     person.gender = props.gender;
     return await this.repository.create(person);
   }

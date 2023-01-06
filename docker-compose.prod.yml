@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:postgres@unitybd/postgres?sslmode=disable
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/app
+    networks:
+      - app-net
+    depends_on:
+      - unitybd
+
+  front:
+    image: unitymusictech/frontend
+    ports:
+      - 3006:80
+    networks:
+      - app-net
+
+  unitybd:
+    container_name: unitybd
+    restart: unless-stopped
+    image: postgres:latest
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - app-net
+    ports:
+      - '5432:5432'
+    env_file:
+      - ./.env.pgsql
+
+###############################################################################
+# FIM DOS SERVICES
+###############################################################################
+
+networks:
+  app-net:
+    name: external-networks

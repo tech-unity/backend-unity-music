@@ -9,7 +9,8 @@
     "seed":"npx typeorm-ts-node-commonjs migration:run -d ./src/infrastructure/AppDataSource.ts",
     "build": "npx tsc",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dockerHub": "docker build -t unitymusictech/backend . && docker push unitymusictech/backend"
   },
   "repository": {
     "type": "git",

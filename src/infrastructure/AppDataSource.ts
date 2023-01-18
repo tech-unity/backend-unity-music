@@ -38,4 +38,4 @@ AppDataSource.initialize()
     await AppDataSource.runMigrations();
     console.log('We are at the environment: ', process.env.NODE_ENV);
   })
-  .catch(err => console.error(err));
+  .catch(err => console.error('Erro ao initializar banco de dados', err));
